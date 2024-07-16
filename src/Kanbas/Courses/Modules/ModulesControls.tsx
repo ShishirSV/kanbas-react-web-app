@@ -1,6 +1,9 @@
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
 import { FaBan } from "react-icons/fa";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 export default function ModulesControls() {
   return (
     <div id="wd-modules-controls" className="text-nowrap">
@@ -16,28 +19,28 @@ export default function ModulesControls() {
         </button>
         <ul className="dropdown-menu">
           <li>
-            <button id="wd-publish-all-modules-and-items-btn" className="dropdown-item">
+            <a id="wd-publish-all-modules-and-items-btn" className="dropdown-item" href="google.com">
               <GreenCheckmark />
               Publish all modules and items
-            </button>
+            </a>
           </li>
           <li>
-            <button id="wd-publish-modules-only-button" className="dropdown-item">
+            <a id="wd-publish-modules-only-button" className="dropdown-item" href="google.com">
               <GreenCheckmark />
               Publish modules only
-            </button>
+            </a>
           </li>
           <li>
-            <button id="wd-unpublish-all-modules-and-items-button" className="dropdown-item">
+            <a id="wd-unpublish-all-modules-and-items-button" className="dropdown-item" href="google.com">
               <FaBan />
               Unpublish all modules and items
-            </button>
+            </a>
           </li>
           <li>
-            <button id="wd-unpublish-modules-only-btn" className="dropdown-item">
+            <a id="wd-unpublish-modules-only-btn" className="dropdown-item" href="google.com">
               <FaBan />
               Unpublish modules only
-            </button>
+            </a>
           </li>
           {/* Create two more items with IDs wd-unpublish-all-modules-and-items and
               wd-unpublish-modules-only with labels Unpublish all modules and items
