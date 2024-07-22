@@ -1,4 +1,11 @@
+import { assignments } from "../../Database";
+import { useParams } from "react-router";
+import "./index.css";
+
 export default function Assignments() {
+  const { cid } = useParams();
+  const courseAssignments = assignments.filter((assignment) => assignment.course === cid);
+
     return (
       <div id="wd-assignments">
         <input id="wd-search-assignment"
@@ -9,24 +16,17 @@ export default function Assignments() {
           ASSIGNMENTS 40% of Total <button>+</button>
         </h3>
         <ul id="wd-assignment-list">
-          <li className="wd-assignment-list-item">
-            <a className="wd-assignment-link"
-              href="#/Kanbas/Courses/1234/Assignments/123">
-              A1 - ENV + HTML
-            </a>
-          </li>
-          <li className="wd-assignment-list-item">
-          <a className="wd-assignment-link"
-              href="#/Kanbas/Courses/1234/Assignments/123">
-              A2 - CSS + BOOTSTRAP
-            </a>
-          </li>
-          <li className="wd-assignment-list-item">
-          <a className="wd-assignment-link"
-              href="#/Kanbas/Courses/1234/Assignments/123">
-              A3 - JAVASCRIPT + REACT
-            </a>
-          </li>
+        {courseAssignments
+          .map((assignment) => (
+            <li className="wd-assignment-list-item" key={assignment._id}>
+              <a
+                className="wd-assignment-link"
+                href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+              >
+                {assignment.title}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
   );

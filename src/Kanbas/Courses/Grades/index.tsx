@@ -4,16 +4,20 @@ import { TbFileExport } from "react-icons/tb";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiFilter } from "react-icons/fi";
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import { users, assignments, enrollments, grades } from '../../Database';
+import { useParams } from 'react-router-dom';
 
-export default function ModulesControls() {
-  const [grades, setGrades] = useState({
-    janeAdamsA4: '66.22%',
-  });
+export default function Grades() {
+  const { cid } = useParams();
+  const courseEnrollments = enrollments.filter(e => e.course === cid);
+  const students = courseEnrollments.map(e => ({
+    ...users.find(user => user._id === e.user),
+    grades: grades.filter(g => g.student === e.user)
+  }));
+  const courseAssignments = assignments.filter(a => a.course === cid);
+  
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGrades({ ...grades, janeAdamsA4: e.target.value });
-  };
   return (
     <div id="wd-modules-controls" className="text-nowrap">
       <button id="wd-add-module-btn" className="btn btn-lg btn-secondary me-3 float-end">
@@ -28,54 +32,68 @@ export default function ModulesControls() {
         <TbFileImport className="position-relative me-2" style={{ bottom: "1px" }} />
         Import
       </button><br /><br /><br /><br />
-    <div className="row">
-      <div className="col-5 mb-3">
-        <label className="from label">
-          <strong>Student Names</strong></label>
-          <div className="input-group mb-3">
-            <span className="input-group-text mb-3"><IoSearchOutline className="position-relative" style={{ bottom: "1px" }} /></span>
-            <input
-              type="text"
-              placeholder="Search Students"
-            />
-          </div>
-      </div>
-      <div className="col-5 mb-3">
-        <label className="from label">
-          <strong>Assignment Names</strong>
-        </label>
-        <div className="input-group mb-3">
-          <span className="input-group-text mb-3"><IoSearchOutline className="position-relative" style={{ bottom: "1px" }} /></span>
-          <input
-            type="text"
-            placeholder="Search Assignments"
-          />
-        </div>
+    <div className="mb-3">
+  <div className="row">
+    <div className="col-sm-6">
+      <label className="form-label"><strong>Student Names</strong></label>
+    </div>
+    <div className="col-sm-6">
+      <label className="form-label"><strong>Assignment Names</strong></label>
+    </div>
+  </div>
+  <div className="row">
+    <div className="col-sm-6">
+      <div className="input-group mb-3">
+        <span className="input-group-text"><IoSearchOutline /></span>
+        <select className="form-select">
+         <option selected>Search Students</option>
+         {students.map(student => (
+                  <option key={student._id} value={student._id}>{student.firstName} {student.lastName}</option>
+                ))}
+      </select>
       </div>
     </div>
-    
+    <div className="col-sm-6">
+      <div className="input-group mb-3">
+        <span className="input-group-text"><IoSearchOutline /></span>
+        <select className="form-select">
+         <option selected>Search Assignments</option>
+         {courseAssignments.map(assignment => (
+                  <option key={assignment._id} value={assignment._id}>{assignment._id}-{assignment.title}</option>
+                ))}
+      </select>
+      </div>
+    </div>
+  </div>
+</div>
     
     <button className="btn btn-lg btn-secondary text-start">
         <FiFilter className="me-2 fs-5" />
         Apply Filters
       </button><br /><br />
-      <div id="wd-grades-tables">
-      <table className="table">
+      <div id="wd-grades-tables" className="table-responsive">
+      <table className="table table-striped table-custom">
         <thead>
-          <tr className="table-secondary"><th scope="col">Student Name</th><th>A1 SETUP Out of 100</th><th>A2 HTML Out of 100</th><th>A3 CSS Out of 100</th><th>A4 BOOTSTRAP Out of 100</th></tr>
+          <tr>
+            <th>Student Name</th>
+            {courseAssignments.map(a => (
+                <th key={a._id} className="assignment-header">
+                <div>{a._id}</div>
+                <div className="assignment-subtitle">Out of 100</div>
+              </th>
+              ))}
+          </tr>
         </thead>
         <tbody>
-          <tr className="table-white"><td>Jane Adams</td><td>100%</td><td>96.67%</td><td>92.18%</td><td><input
-                type="text"
-                value={"66.22%"}
-                onChange={handleInputChange}
-                className="form-control"
-              /></td></tr>
-          <tr className="table-secondary"><td>Christina Allen</td><td>100%</td><td>100%</td><td>100%</td><td>90%</td></tr>
-          <tr className="table-white"><td>Samreen Ansari</td><td>100%</td><td>100%</td><td>100%</td><td>90%</td></tr>
-          <tr className="table-secondary"><td>Han Bao</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
-          <tr className="table-white"><td>Mahi Sai Srinivas Bobbili</td><td>100%</td><td>96.67%</td><td>98.37%</td><td>100%</td></tr>
-          <tr className="table-secondary"><td>Siran Cao</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+          {students.map(s => (
+            <tr key={s._id}>
+              <td className="red-text">{s.firstName} {s.lastName}</td>
+              {courseAssignments.map(a => {
+                  const grade = s.grades.find(g => g.assignment === a._id);
+                  return <td key={`${s._id}-${a._id}`} className="assignment-header">{grade ? `${grade.grade}%` : 'N/A'}</td>;
+                })}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
