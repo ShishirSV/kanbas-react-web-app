@@ -1,0 +1,18 @@
+#wd-courses {
+  padding: 20px; /* Optional: Add padding around the container */
+}
+
+#wd-courses .d-flex {
+  display: flex;
+}
+
+#wd-courses .d-none.d-md-block {
+  flex: 0 0 250px; /* Set the width of the sidebar */
+}
+
+#wd-courses .flex-fill {
+  flex: 1;
+  padding-left: 20px; /* Optional: Add some space between the sidebar and the content */
+}
+
+  

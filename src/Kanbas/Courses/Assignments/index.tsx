@@ -1,5 +1,7 @@
 import { assignments } from "../../Database";
 import { useParams } from "react-router";
+import LessonControlButtons from "../Modules/LessonControlButtons";
+import { VscNotebook } from "react-icons/vsc";
 import "./index.css";
 
 export default function Assignments() {
@@ -19,12 +21,13 @@ export default function Assignments() {
         {courseAssignments
           .map((assignment) => (
             <li className="wd-assignment-list-item" key={assignment._id}>
-              <a
-                className="wd-assignment-link"
-                href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
-              >
+              <VscNotebook className="wd-assignment-icon" />
+              <a className="wd-assignment-link" href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
                 {assignment.title}
               </a>
+              <div className="wd-control-buttons">
+                  <LessonControlButtons />
+              </div>
             </li>
           ))}
         </ul>

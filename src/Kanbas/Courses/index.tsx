@@ -7,6 +7,7 @@ import AssignmentEditor from "./Assignments/Editor";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
 import { courses } from "../Database";
+import "./index.css";
 
 
 
@@ -24,7 +25,7 @@ export default function Courses() {
       </h2>
       <hr />
       <div className="d-flex">
-        <div className="d-none d-md-block"></div>
+        <div className="d-none d-md-block">
           <CoursesNavigation />
         </div>
         <div className="flex-fill">
@@ -38,6 +39,7 @@ export default function Courses() {
             </Routes>
         </div>
       </div>
+    </div>
   );
 }
   
