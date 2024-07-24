@@ -1,55 +1,66 @@
-import { FaPlus } from "react-icons/fa6";
-import { BsGripVertical } from "react-icons/bs";
-import { MdArrowDropDown } from "react-icons/md";
-import { TfiWrite } from "react-icons/tfi";
-import { IoSearchOutline } from "react-icons/io5";
+import { VscNotebook } from "react-icons/vsc";
+import LessonControlButtons from "../Modules/LessonControlButtons";
+import "./index.css";
 
 export default function Assignments() {
     return (
-      <div id="wd-assignments">
-        <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1 float-end">
-        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Assignment
-      </button>
-      <button id="wd-add-module-btn" className="btn btn-lg btn-secondary me-1 float-end">
-        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Group
-      </button>
-        <IoSearchOutline className="position-relative" style={{ bottom: "1px" }} />
-        <input id="wd-search-assignment"
-        placeholder="Search..." /><br/><br/><br/><br/>
-        <ul id="wd-modules" className="list-group rounded-0">
-    <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
-      <div className="wd-title p-3 ps-2 bg-secondary">
-        <BsGripVertical className="me-2 fs-3" />
-        <MdArrowDropDown className="me-1 fs-3" />
-        ASSIGNMENTS
-      </div>
-      <ul className="wd-lessons list-group rounded-0">
-        <li className="wd-lesson list-group-item p-3 ps-1">
-          <BsGripVertical className="me-2 fs-3" />
-          <TfiWrite className="wd-fg-color-green me-2 fs-3 " />
-          <strong>A1</strong>
-          <h6><p className="wd-fg-color-red">
-          Multiple Modules
-          <span className="wd-fg-color-black">| <b>Not available until</b> May 6 at 12:00am | <b>Due</b> May 13 at 11:59pm | 100 pts</span>
-          </p></h6>
-
-        </li>
-        <li className="wd-lesson list-group-item p-3 ps-1">
-          <BsGripVertical className="me-2 fs-3" />
-          <TfiWrite className="wd-fg-color-green me-2 fs-3 " />
-          <strong>A2</strong>
-          <h6><p className="wd-fg-color-red">
-          Multiple Modules
-          <span className="wd-fg-color-black">| <b>Not available until</b> May 13 at 12:00am | <b>Due</b> May 20 at 11:59pm | 100 pts</span>
-          </p></h6>
-
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-  );
+        <div id="wd-assignments">
+            <input id="wd-search-assignment" placeholder="Search for Assignments" />
+            <button id="wd-add-assignment-group">+ Group</button>
+            <button id="wd-add-assignment">+ Assignment</button>
+            <h3 id="wd-assignments-title">
+                ASSIGNMENTS <span className="wd-percentage">40% of Total</span> <button>+</button>
+            </h3>
+            <ul id="wd-assignment-list">
+                <li className="wd-assignment-list-item">
+                    <div className="wd-assignment-header">
+                        <VscNotebook className="wd-assignment-icon" />
+                        <a className="wd-assignment-link" href="#/Kanbas/Courses/1234/Assignments/123">
+                            A1
+                        </a>
+                        <div className="wd-control-buttons">
+                            <LessonControlButtons />
+                        </div>
+                    </div>
+                    <div className="wd-assignment-details">
+                        <span className="wd-multiple-modules">Multiple Modules</span> | <span className="wd-bold-text">Not available until</span> May 6 at 12:00am |
+                        <br />
+                        <span className="wd-bold-text">Due</span> May 13 at 11:59pm | 100 pts
+                    </div>
+                </li>
+                <li className="wd-assignment-list-item">
+                    <div className="wd-assignment-header">
+                        <VscNotebook className="wd-assignment-icon" />
+                        <a className="wd-assignment-link" href="#/Kanbas/Courses/1234/Assignments/124">
+                            A2
+                        </a>
+                        <div className="wd-control-buttons">
+                            <LessonControlButtons />
+                        </div>
+                    </div>
+                    <div className="wd-assignment-details">
+                        <span className="wd-multiple-modules">Multiple Modules</span> | <span className="wd-bold-text">Not available until</span> May 13 at 12:00am |
+                        <br />
+                        <span className="wd-bold-text">Due</span> May 20 at 11:59pm | 100 pts
+                    </div>
+                </li>
+                <li className="wd-assignment-list-item">
+                    <div className="wd-assignment-header">
+                        <VscNotebook className="wd-assignment-icon" />
+                        <a className="wd-assignment-link" href="#/Kanbas/Courses/1234/Assignments/125">
+                            A3
+                        </a>
+                        <div className="wd-control-buttons">
+                            <LessonControlButtons />
+                        </div>
+                    </div>
+                    <div className="wd-assignment-details">
+                        <span className="wd-multiple-modules">Multiple Modules</span> | <span className="wd-bold-text">Not available until</span> May 20 at 12:00am |
+                        <br />
+                        <span className="wd-bold-text">Due</span> May 27 at 11:59pm | 100 pts
+                    </div>
+                </li>
+            </ul>
+        </div>
+    );
 }
-  
