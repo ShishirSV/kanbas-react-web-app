@@ -611,7 +611,7 @@ Here's another paragraph using a different ID and a different look and
             </form>
           </div>
 
-          <div id="wd-css-navigating-with-tabs">
+          {/* <div id="wd-css-navigating-with-tabs">
             <h2>Tabs</h2>
             <ul className="nav nav-tabs">
               <li className="nav-item">
@@ -627,7 +627,7 @@ Here's another paragraph using a different ID and a different look and
                   <a className="nav-link disabled" href="#">Disabled</a>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           <div id="wd-css-navigating-with-cards">
           <h2>Cards</h2>
