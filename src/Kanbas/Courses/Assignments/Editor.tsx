@@ -2,7 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import { addAssignment, updateAssignment } from './reducer';
-import { Assignment, AssignmentsState } from './types'
+import { AssignmentsState } from './types'
 
 export default function AssignmentEditor() {
   const dispatch = useDispatch();

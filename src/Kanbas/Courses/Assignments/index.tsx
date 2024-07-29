@@ -5,7 +5,6 @@ import "./index.css";
 import { useNavigate } from "react-router-dom";
 import { deleteAssignment } from './reducer';
 import { useSelector, useDispatch } from 'react-redux';
-import React, { useState } from 'react';
 
 export default function Assignments() {
   const { cid } = useParams();
