@@ -3,8 +3,10 @@ import AssignmentControlButtons from "./AssignmentControlButtons"
 import { VscNotebook } from "react-icons/vsc";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import { deleteAssignment } from './reducer';
+import { deleteAssignment, setAssignments } from './reducer';
 import { useSelector, useDispatch } from 'react-redux';
+import * as client from "./client";
+import React, { useEffect } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -12,13 +14,22 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const courseAssignments = useSelector((state:any) => state.assignments.assignments.filter((a:any) => a.course === cid));
 
+  const fetchAssignments = async () => {
+    const assignments = await client.fetchAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
   const handleAddAssignment = () => {
     const newAssignmentId = new Date().getTime().toString();
     navigate(`/Kanbas/Courses/${cid}/Assignments/${newAssignmentId}`);
   }
 
-  const handleDelete = (assignmentId: string) => {
+  const handleDelete = async(assignmentId: string) => {
     if (window.confirm("Are you sure you want to delete this assignment?")) {
+      await client.deleteAssignment(assignmentId);
       dispatch(deleteAssignment(assignmentId));
     }
   };
@@ -46,7 +57,9 @@ export default function Assignments() {
                 <div className="wd-due-date">Due: {"07-22-2024"}</div>
               </div>
               <div className="wd-control-buttons">
-                  <AssignmentControlButtons assignmentId={assignment._id} deleteAssignment={handleDelete} />
+                  <AssignmentControlButtons assignmentId={assignment._id} deleteAssignment={(assignmentId) => {
+                    handleDelete(assignmentId);
+                  }} />
               </div>
             </li>
           ))}

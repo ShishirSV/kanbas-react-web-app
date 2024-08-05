@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import { addAssignment, updateAssignment } from './reducer';
 import { AssignmentsState } from './types'
+import * as client from "./client";
 
 export default function AssignmentEditor() {
   const dispatch = useDispatch();
@@ -33,10 +34,12 @@ export default function AssignmentEditor() {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async() => {
     if (existingAssignment) {
+      await client.updateAssignment(assignment);
       dispatch(updateAssignment(assignment));
     } else {
+      await client.createAssignment(cid as string, assignment);
       dispatch(addAssignment(assignment));
     }
   };
