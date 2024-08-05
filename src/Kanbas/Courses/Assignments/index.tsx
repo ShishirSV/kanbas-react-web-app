@@ -14,13 +14,14 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const courseAssignments = useSelector((state:any) => state.assignments.assignments.filter((a:any) => a.course === cid));
 
-  const fetchAssignments = async () => {
-    const assignments = await client.fetchAssignmentsForCourse(cid as string);
-    dispatch(setAssignments(assignments));
-  };
   useEffect(() => {
+    const fetchAssignments = async () => {
+      const assignments = await client.fetchAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(assignments));
+    };
+  
     fetchAssignments();
-  }, []);
+  }, [cid, dispatch]);
 
   const handleAddAssignment = () => {
     const newAssignmentId = new Date().getTime().toString();
