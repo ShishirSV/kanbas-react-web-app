@@ -44,7 +44,7 @@ export default function TOC() {
         </a>
       </li>
       <li className="nav-item">
-        <a id="wd-k" href="https://kanbas-node-server-app-rdwj.onrender.com" className="nav-link">
+        <a id="wd-k" href="https://kanbas-node-server-app-a6-0jnt.onrender.com" className="nav-link">
           Backend Server
         </a>
       </li>
