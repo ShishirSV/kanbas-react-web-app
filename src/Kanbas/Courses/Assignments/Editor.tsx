@@ -9,10 +9,11 @@ export default function AssignmentEditor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { aid, cid } = useParams();
+  console.log(aid, cid);
   const existingAssignment = useSelector((state: { assignments: AssignmentsState }) =>
     state.assignments.assignments.find((a) => a._id === aid)
   );
-
+  console.log(existingAssignment);
   const [assignment, setAssignment] = useState(
     existingAssignment || {
       _id: aid,

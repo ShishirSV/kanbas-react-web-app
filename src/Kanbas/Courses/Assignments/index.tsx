@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import AssignmentControlButtons from "./AssignmentControlButtons"
 import { VscNotebook } from "react-icons/vsc";
 import "./index.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteAssignment, setAssignments } from './reducer';
 import { useSelector, useDispatch } from 'react-redux';
 import * as client from "./client";
@@ -50,9 +50,10 @@ export default function Assignments() {
           .map((assignment:any) => (
             <li className="wd-assignment-list-item" key={assignment._id}>
               <VscNotebook className="wd-assignment-icon" />
-              <a className="wd-assignment-link" href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
+              <Link to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>{assignment.title}</Link>
+              {/* <a className="wd-assignment-link" href={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
                 {assignment.title}
-              </a>
+              </a> */}
               <div className="wd-assignment-dates">
                 <div className="wd-availability-date">Available: {"07-18-2024"}</div>
                 <div className="wd-due-date">Due: {"07-22-2024"}</div>
