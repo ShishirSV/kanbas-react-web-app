@@ -28,14 +28,25 @@ export default function PeopleDetails({ fetchUsers }:
 
   const { uid, cid } = useParams();
   const [user, setUser] = useState<any>({});
-  const fetchUser = async () => {
-    if (!uid) return;
-    const user = await client.findUserById(uid);
-    setUser(user);
-  };
+  // const fetchUser = async () => {
+  //   if (!uid) return;
+  //   const user = await client.findUserById(uid);
+  //   setUser(user);
+  // };
+  // useEffect(() => {
+  //   if (uid) fetchUser();
+  // }, [uid]);
+
   useEffect(() => {
-    if (uid) fetchUser();
+    const fetchUser = async () => {
+      if (!uid) return;
+      const user = await client.findUserById(uid);
+      setUser(user);
+    };
+  
+    fetchUser();
   }, [uid]);
+
   if (!uid) return null;
   return (
     <div className="wd-people-details position-fixed top-0 end-0 bottom-0 bg-white p-4 shadow w-25">

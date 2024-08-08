@@ -9,14 +9,27 @@ export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const fetchProfile = async () => {
-    try {
-      const account = await client.profile();
-      setProfile(account);
-    } catch (err: any) {
-      navigate("/Kanbas/Account/Signin");
-    }
-  };
+  // const fetchProfile = async () => {
+  //   try {
+  //     const account = await client.profile();
+  //     setProfile(account);
+  //   } catch (err: any) {
+  //     navigate("/Kanbas/Account/Signin");
+  //   }
+  // };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+            const account = await client.profile();
+            setProfile(account);
+          } catch (err: any) {
+            navigate("/Kanbas/Account/Signin");
+          }
+    };
+  
+    fetchProfile();
+  }, [navigate]);
 
 
   const signout = async () => {
@@ -25,7 +38,7 @@ export default function Profile() {
     navigate("/Kanbas/Account/Signin");
   };
 
-  useEffect(() => { fetchProfile(); }, []);
+  // useEffect(() => { fetchProfile(); }, []);
   return (
     <div className="wd-profile-screen">
       <h1>Profile</h1>
