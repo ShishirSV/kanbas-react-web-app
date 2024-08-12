@@ -1,6 +1,6 @@
 import Dashboard from "./Dashboard";
 import KanbasNavigation from "./Navigation";
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Courses from "./Courses";
 import "./styles.css";
 import React, { useState } from "react";
@@ -10,6 +10,7 @@ import * as client from "./Courses/client";
 import { useEffect } from "react";
 import Account from "./Account";
 import ProtectedRoute from "./ProtectedRoute";
+import { UserProvider } from "./UserContext";
 
 export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -56,6 +57,7 @@ export default function Kanbas() {
   };
   return (
     <Provider store={store}>
+      <UserProvider>
       <div id="wd-kanbas" className="h-100">
         <div className="d-flex h-100">
           <div className="d-none d-md-block bg-black">
@@ -80,6 +82,7 @@ export default function Kanbas() {
           </div>
         </div>
       </div>
+      </UserProvider>
     </Provider>
 );}
 

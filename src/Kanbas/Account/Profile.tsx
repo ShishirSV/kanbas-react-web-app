@@ -9,15 +9,6 @@ export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const fetchProfile = async () => {
-  //   try {
-  //     const account = await client.profile();
-  //     setProfile(account);
-  //   } catch (err: any) {
-  //     navigate("/Kanbas/Account/Signin");
-  //   }
-  // };
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -57,8 +48,7 @@ export default function Profile() {
           <input className="wd-email" value={profile.email}
                  onChange={(e) => setProfile({ ...profile, email: e.target.value })}/>
           <select className="wd-role" onChange={(e) => setProfile({ ...profile, role: e.target.value })}>
-            <option value="USER">User</option>            <option value="ADMIN">Admin</option>
-            <option value="FACULTY">Faculty</option>      <option value="STUDENT">Student</option>
+            <option value="FACULTY">FACULTY</option>      <option value="STUDENT">STUDENT</option>
           </select>
           <button onClick={signout} className="wd-signout-btn btn btn-danger w-100">
                 Sign out
