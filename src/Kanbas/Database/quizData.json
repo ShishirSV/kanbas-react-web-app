@@ -1,0 +1,20 @@
+{
+    "id": 1,
+    "title": "Q1 - HTML",
+    "description": "Quiz Instructions",
+    "questions": [
+      {
+        "id": 1,
+        "title": "Question 1",
+        "text": "An HTML label element can be associated with an HTML input element by setting their id attributes to the same value. The resulting effect is that when you click on the label text, the input element receives focus as if you had clicked on the input element itself.",
+        "type": "True/false",
+        "points": 1,
+        "choices": ["True", "False"],
+        "correctAnswer": "True"
+      }
+    ],
+    "published": true,
+    "timeLimit": 20,
+    "attempts": 1,
+    "shuffleAnswers": false
+  }
