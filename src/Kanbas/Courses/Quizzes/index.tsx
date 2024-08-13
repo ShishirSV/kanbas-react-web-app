@@ -12,8 +12,11 @@ import { IoRocketOutline } from "react-icons/io5";
 import GreenCheckmark from './GreenCheckmark';
 import RedBan from './RedBan';
 import { FaEdit, FaTrash, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useUser } from "../../UserContext";
 
 export default function Quizzes() {
+  const { user } = useUser();
+  console.log(user);
   const { cid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -79,9 +82,12 @@ export default function Quizzes() {
       <div className="d-flex justify-content-between mb-2">
         <input type="text" className="form-control" placeholder="Search for Quiz" style={{ maxWidth: '300px' }} />
         <div>
-          <button onClick={handleAddQuiz} className="btn btn-lg btn-danger me-1">
-            <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> Add Quiz
-          </button>
+        {user?.role === 'FACULTY' && (
+        <button onClick={handleAddQuiz} className="btn btn-lg btn-danger me-1">
+          <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
+          Add Quiz
+        </button>
+      )}
           <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
               <IoEllipsisVertical className="position-relative" style={{ fontSize: '30px' }} />
             </button>

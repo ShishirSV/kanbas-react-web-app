@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import Account from "./Account";
 import ProtectedRoute from "./ProtectedRoute";
 import { UserProvider } from "./UserContext";
+import Session from "./Account/Session";
 
 export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -58,6 +59,7 @@ export default function Kanbas() {
   return (
     <Provider store={store}>
       <UserProvider>
+        <Session>
       <div id="wd-kanbas" className="h-100">
         <div className="d-flex h-100">
           <div className="d-none d-md-block bg-black">
@@ -82,6 +84,7 @@ export default function Kanbas() {
           </div>
         </div>
       </div>
+      </Session>
       </UserProvider>
     </Provider>
 );}
