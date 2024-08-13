@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
   modules: [],
 };
+
 const modulesSlice = createSlice({
   name: "modules",
   initialState,
@@ -12,17 +12,11 @@ const modulesSlice = createSlice({
     },
 
     addModule: (state, { payload: module }) => {
-      const newModule: any = {
-        _id: new Date().getTime().toString(),
-        lessons: [],
-        name: module.name,
-        course: module.course,
-      };
-      state.modules = [...state.modules, newModule] as any;
+       state.modules = [...state.modules, module] as any;
     },
+    
     deleteModule: (state, { payload: moduleId }) => {
-      state.modules = state.modules.filter(
-        (m: any) => m._id !== moduleId);
+      state.modules = state.modules.filter((m: any) => m._id !== moduleId) as any;
     },
     updateModule: (state, { payload: module }) => {
       state.modules = state.modules.map((m: any) =>
@@ -36,6 +30,8 @@ const modulesSlice = createSlice({
     },
   },
 });
+
 export const { addModule, deleteModule, updateModule, editModule, setModules } =
   modulesSlice.actions;
+  
 export default modulesSlice.reducer;

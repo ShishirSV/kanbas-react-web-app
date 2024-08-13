@@ -1,47 +1,70 @@
+import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import CoursesNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
-import Grades from "./Grades";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
+import Grades from "./Grades";
+import DropdownIndexCourse from "./Navigation/DropdownIndexCourse";
+import { RxDragHandleHorizontal } from "react-icons/rx";
+import Quizzes from "./Quiz";
 import PeopleTable from "./People/Table";
-import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
-import { FaAlignJustify } from "react-icons/fa";
-import "./index.css";
+import Editor from "./Quiz/Editor/Editor";
+import QuizTake from "./Quiz/QuizTake";
+import QuizDetails from "./Quiz/QuizDetails";
+import EditorQuizDetails from "./Quiz/Editor/EditorQuizDetails";
+import QuizProtectedRoute from "./Quiz/QuizProtectedRoute";
+import QuizPreview from "./Quiz/QuizPreview";
 
-
-
-export default function Courses({ courses }: { courses: any[]; }) {
+export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
 
   return (
     <div id="wd-courses">
-      <h2 className="text-danger">
-        <FaAlignJustify className="me-4 fs-4 mb-1" />
-        {course && course.name} &gt; {pathname.split("/")[4]}
-
-      </h2>
+      <br />
+      <div className="d-block d-md-none">
+        <h3>Course Navigation</h3>
+        <DropdownIndexCourse />
+      </div>
+      <div className="d-flex flex-row">
+        <RxDragHandleHorizontal className="fs-1 me-2" />
+        <h2>
+          {course && course.name} &gt; {pathname.split("/")[4]}
+        </h2>
+      </div>
       <hr />
       <div className="d-flex">
         <div className="d-none d-md-block">
           <CoursesNavigation />
         </div>
+
         <div className="flex-fill">
-            <Routes>
-              <Route path="/" element={<Navigate to="Home" />} />
-              <Route path="Home" element={<Home />} />
-              <Route path="Modules" element={<Modules/>} />
-              <Route path="Assignments" element={<Assignments />} />
-              <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-              <Route path="Grades" element={<Grades/>} />
-              <Route path="People" element={<PeopleTable />} />
-              <Route path="People/:uid" element={<PeopleTable />} />
-            </Routes>
+          <Routes>
+            <Route path="/" element={<Navigate to="Home" />} />
+            <Route path="Home" element={<Home />} />
+            <Route path="Modules" element={<Modules />} />
+            <Route path="Assignments" element={<Assignments />} />
+            <Route path="Assignments/:id" element={<AssignmentEditor />} />
+            <Route path="Grades" element={<Grades />} />
+            <Route path="Quizzes" element={<Quizzes {...course}/>} />
+            <Route path="People" element={<PeopleTable />} />
+            <Route path="People/:uid" element={<PeopleTable />} />
+            <Route path="Quizzes/:id" element={<QuizTake />} />
+            <Route path="Quizzes/:id/preview" element={<QuizPreview />} />
+            <Route path="Quizzes/:qid/details" element={<QuizDetails {...course} />} />
+            <Route
+              path="Quizzes/Editor/:qid"
+              element={
+                <QuizProtectedRoute>
+                  <Editor />
+                </QuizProtectedRoute>
+              }
+            />
+          </Routes>
         </div>
       </div>
     </div>
   );
 }
-  
