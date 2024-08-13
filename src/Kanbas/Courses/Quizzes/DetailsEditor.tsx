@@ -26,10 +26,11 @@ function QuizEditor() {
     oneQuestionAtATime: quiz.oneQuestionAtATime || true,
     webcamRequired: quiz.webcamRequired || false,
     lockQuestionsAfterAnswering: quiz.lockQuestionsAfterAnswering || false,
-    dueDate: quiz.dueDate || '',
-    availableDate: quiz.availableDate || '',
-    untilDate: quiz.untilDate || '',
-    questions: quiz.questions || []
+    dueDate: quiz.dueDate || new Date(),
+    availableDate: quiz.availableDate || new Date(),
+    untilDate: quiz.untilDate || new Date(),
+    questions: quiz.questions || [],
+    published: quiz.published || false,
   });
 
   useEffect(() => {
@@ -42,7 +43,9 @@ function QuizEditor() {
   }, [cid, qid, dispatch, quiz._id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+
     const { name, value } = e.target;
+    console.log('Setting:', name, value);
     setQuizDetails(prev => ({ ...prev, [name]: value }));
   };
 
@@ -54,6 +57,7 @@ function QuizEditor() {
     }
     else if (qid) {
       await updateQuizDetails(qid, quizDetails);
+      console.log('Updating quiz:', quizDetails);
       navigate(`/Kanbas/Courses/${cid}/Quizzes`);
     } else {
       console.error("Quiz ID is missing!");
@@ -63,6 +67,16 @@ function QuizEditor() {
   const handleCancel = () => {
     navigate(`/Kanbas/Courses/${cid}/Quizzes`);
   };
+
+  const formatDateTime = (date:any) => {
+    if (date instanceof Date) {
+      return date.toISOString();
+    } else {
+      console.error('Invalid Date:', date);
+      return '';
+    }
+  };
+  
 
   const [activeTab, setActiveTab] = useState('detail');
 
@@ -124,17 +138,37 @@ function QuizEditor() {
         <div className="mt-4 col-sm-8" style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '5px' }}>
           <h5>Assign to</h5>
           <input type="text" className="form-control" value="Everyone" readOnly /><br />
-          <h5>Due</h5>  
-          <input type="datetime-local" className="form-control" name="dueDate" value={quizDetails.dueDate} onChange={handleChange} /><br />
+          <h5>Due</h5>
+            <input
+              type="datetime-local"
+              className="form-control"
+              name="dueDate"
+              value={formatDateTime(quizDetails.dueDate)}
+              onChange={(e) => setQuizDetails({ ...quizDetails, dueDate: new Date(e.target.value) })}
+            /><br />
+
           <div className="row">
-            <div className="col-sm-6">
-              <h5>Available from</h5>
-              <input type="datetime-local" className="form-control" name="availableFrom" value={quizDetails.availableDate} onChange={handleChange} />
-            </div>
-            <div className="col-sm-6">
-              <h5>Until</h5>
-              <input type="datetime-local" className="form-control" name="untilDate" value={quizDetails.untilDate} onChange={handleChange} />
-            </div>
+          <div className="col-sm-6">
+            <h5>Available from</h5>
+            <input
+              type="datetime-local"
+              className="form-control"
+              name="availableFrom"
+              value={formatDateTime(quizDetails.availableDate)}
+              onChange={(e) => setQuizDetails({ ...quizDetails, availableDate: new Date(e.target.value) })}
+            />
+          </div>
+
+          <div className="col-sm-6">
+            <h5>Until</h5>
+            <input
+              type="datetime-local"
+              className="form-control"
+              name="untilDate"
+              value={formatDateTime(quizDetails.untilDate)}
+              onChange={(e) => setQuizDetails({ ...quizDetails, untilDate: new Date(e.target.value) })}
+            />
+          </div>
           </div>
         </div>
       </div>

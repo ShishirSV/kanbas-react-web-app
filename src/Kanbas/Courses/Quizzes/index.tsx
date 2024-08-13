@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import React, { useState, useEffect } from 'react';
 import { FaPlus } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
@@ -9,6 +11,7 @@ import { MdArrowDropDown } from "react-icons/md";
 import { IoRocketOutline } from "react-icons/io5";
 import GreenCheckmark from './GreenCheckmark';
 import RedBan from './RedBan';
+import { FaEdit, FaTrash, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function Quizzes() {
   const { cid } = useParams();
@@ -117,22 +120,30 @@ export default function Quizzes() {
             </div>
             <div className="d-flex align-items-center">
             {quiz.published ? <GreenCheckmark /> : <RedBan />}
-              <div className="dropdown">
-                <button className="btn dropdown-toggle " type="button" id="quizMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                  <IoEllipsisVertical style={{ fontSize: '20px' }} />
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="quizMenuButton">
-                 <li>
-        <a className="dropdown-item" href="google.com" onClick={() => handleEdit(quiz._id)}>Edit</a>
-    </li>
-    <li>
-        <a className="dropdown-item" href="google.com" onClick={() => handleDelete(quiz._id)}>Delete</a>
-    </li>
-    <li>
-        <a className="dropdown-item" href="google.com" onClick={() => togglePublishStatus(quiz._id, quiz.published)}>Publish/Unpublish</a>
-    </li>
-                </ul>
-             </div>
+            <div className="d-inline-flex gap-2">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={() => handleEdit(quiz._id)}
+                      aria-label="Edit"
+                    >
+                      <FaEdit style={{ fontSize: '20px' }} />
+                    </button>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => handleDelete(quiz._id)}
+                      aria-label="Delete"
+                    >
+                      <FaTrash style={{ fontSize: '20px' }} />
+                    </button>
+                    <button
+                      className="btn btn-outline-secondary"
+                      onClick={() => togglePublishStatus(quiz._id, quiz.published)}
+                      aria-label={quiz.published ? 'Unpublish' : 'Publish'}
+                    >
+                      {quiz.published ? <FaEye style={{ fontSize: '20px' }} /> : <FaEyeSlash style={{ fontSize: '20px' }} />}
+                    </button>
+                  </div>
+
             </div>
           </li>
         ))}

@@ -9,6 +9,7 @@ interface TrueFalseEditorProps {
 
 function TrueFalseEditor({ onSave, onCancel }: TrueFalseEditorProps) {
   const [question, setQuestion] = useState({
+    type: 'true-false',
     title: '',
     points: 1,
     questionText: '',

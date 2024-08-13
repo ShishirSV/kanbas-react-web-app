@@ -13,6 +13,7 @@ interface Answer {
 }
 
 interface QuestionData {
+  type: 'fill-in-blanks';
   title: string;
   points: number;
   questionText: string;
@@ -21,6 +22,7 @@ interface QuestionData {
 
 function FillInBlanksEditor({ onSave, onCancel }: FillInBlanksEditorProps) {
   const [question, setQuestion] = useState<QuestionData>({
+    type: 'fill-in-blanks',
     title: '',
     points: 1,
     questionText: '',

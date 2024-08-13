@@ -9,6 +9,7 @@ interface Answer {
 }
 
 interface Question {
+  type: 'multiple-choice';
   title: string;
   points: number;
   questionText: string;
@@ -22,6 +23,7 @@ interface Props {
 
 function MultipleChoiceEditor({ onSave, onCancel }: Props) {
   const [question, setQuestion] = useState<Question>({
+    type: 'multiple-choice',
     title: '',
     points: 1,
     questionText: '',

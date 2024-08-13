@@ -25,6 +25,7 @@ interface Quiz {
     availableDate: Date;
     untilDate: Date;
     questions: Question[];
+    published: boolean;
 }
 
 const initialState: { quizzes: Quiz[] } = {

@@ -4,22 +4,25 @@ import { useDispatch } from 'react-redux';
 import MultipleChoiceEditor from './QuestionEditor/MultipleChoiceEditor';
 import TrueFalseEditor from './QuestionEditor/TrueFalseEditor';
 import FillInBlanksEditor from './QuestionEditor/FillInBlanksEditor';
+import * as client from './client';
 
 export default function QuestionEditor() {
-  const { courseId, quizId } = useParams<{ courseId: string; quizId: string }>();
+  console.log("Params:", useParams());
+  const { cid: courseId, qid: quizId } = useParams<{ cid: string; qid: string }>();
+  console.log('Course ID:', courseId, 'Quiz ID:', quizId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [questionType, setQuestionType] = useState('multipleChoice');
 
-  const handleSave = (questionData:any) => {
-    // Placeholder for save logic
+  const handleSave = async(questionData:any) => {
     console.log('Saving data:', questionData);
+    await client.addQuestionToQuiz(quizId as string, questionData);
     // Navigate back to quiz details
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/Details/${quizId}`);
   };
 
   const handleCancel = () => {
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/Details/${quizId}`);
   };
 
   const renderEditor = () => {
