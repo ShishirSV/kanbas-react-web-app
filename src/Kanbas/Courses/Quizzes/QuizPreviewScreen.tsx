@@ -3,12 +3,7 @@ import { useParams } from 'react-router-dom';
 import MultipleChoiceQuestion from './QuizPreview/MultipleChoiceQuestion';
 import TrueFalseQuestion from './QuizPreview/TrueFalseQuestion';
 import FillInBlanksQuestion from './QuizPreview/FillInBlanksQuestion';
-
-export interface QuestionProps {
-  question: Question;
-  answer: any;
-  onChange: (answer: any) => void;
-}
+import * as client from './client';
 
 export interface Question {
   id: string;
@@ -19,45 +14,33 @@ export interface Question {
   isTrue?: boolean;
 }
 
-export interface Quiz {
-  id: string;
-  title: string;
-  description: string;
-  questions: Question[];
-}
-
 export interface AnswerMap {
   [key: string]: any;
 }
 
 function QuizPreviewScreen() {
   const { quizId } = useParams<{ quizId?: string }>();
-  const [quiz, setQuiz] = useState<Quiz | null>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<AnswerMap>({});
 
   useEffect(() => {
     if (quizId) {
-      const fetchQuizDetails = async (): Promise<Quiz> => {
-        return {
-          id: quizId,
-          title: "Sample Quiz",
-          description: "This is a sample quiz",
-          questions: [
-            { id: 'q1', title: 'Question 1', questionText: 'What is 2+2?', type: 'multiple-choice', choices: [{ text: '4', isCorrect: true }, { text: '3', isCorrect: false }] },
-            { id: 'q2', title: 'Question 2', questionText: 'True or False: Earth is flat?', type: 'true-false', isTrue: false },
-            { id: 'q3', title: 'Question 3', questionText: 'Fill in the blank: The sun rises in the ___', type: 'fill-in-blanks', choices: [{ text: 'East', isCorrect: true }] }
-          ]
-        };
+      const fetchQuestions = async () => {
+        try {
+          const questionsData = await client.fetchQuizQuestions(quizId);
+          setQuestions(questionsData);
+
+          const initialAnswers: AnswerMap = {};
+          questionsData.forEach((question: Question) => {
+            initialAnswers[question.id] = ''; // Initialize answers
+          });
+          setAnswers(initialAnswers);
+        } catch (error) {
+          console.error('Error fetching quiz questions:', error);
+        }
       };
-  
-      fetchQuizDetails().then(data => {
-        setQuiz(data);
-        const initialAnswers: AnswerMap = {};
-        data.questions.forEach(question => {
-          initialAnswers[question.id] = '';
-        });
-        setAnswers(initialAnswers);
-      });
+
+      fetchQuestions();
     }
   }, [quizId]);
 
@@ -65,13 +48,11 @@ function QuizPreviewScreen() {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
   };
 
-  if (!quiz) return <p>Loading...</p>;
+  if (!questions.length) return <p>Loading...</p>;
 
   return (
     <div>
-      <h1>{quiz.title}</h1>
-      <p>{quiz.description}</p>
-      {quiz.questions.map(question => {
+      {questions.map(question => {
         let QuestionComponent = null;
 
         switch (question.type) {
@@ -87,7 +68,6 @@ function QuizPreviewScreen() {
           default:
             return null;
         }
-
 
         return QuestionComponent && (
           <QuestionComponent

@@ -67,7 +67,7 @@ function MultipleChoiceEditor({ onSave, onCancel }: Props) {
         value={question.title}
         onChange={(e) => setQuestion({ ...question, title: e.target.value })}
       />
-      <h4>pts:</h4>
+      <h4>Points:</h4>
       <input
         type="number"
         className="form-control mb-2"
@@ -80,7 +80,9 @@ function MultipleChoiceEditor({ onSave, onCancel }: Props) {
         theme="snow"
         value={question.questionText}
         onChange={(value) => setQuestion({ ...question, questionText: value })}
+        formats={['bold', 'italic', 'underline']} // Customize formats to prevent paragraph wrapping
       />
+
       {question.choices.map((choice, index) => (
         <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
           <input

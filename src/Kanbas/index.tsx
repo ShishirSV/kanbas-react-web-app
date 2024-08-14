@@ -25,9 +25,10 @@ export default function Kanbas() {
 
 
   const [course, setCourse] = useState<any>({
-    _id: "0", name: "New Course", number: "New Number",
+    _id: new Date().getTime().toString(), name: "New Course", number: "New Number",
     startDate: "2023-09-10", endDate: "2023-12-15",
-    image: "/images/reactjs.jpg", description: "New Description"
+    image: "/images/reactjs.jpg", description: "New Description",
+    faculty: "New Faculty"
   });
 
 
@@ -45,6 +46,7 @@ export default function Kanbas() {
 
 
   const updateCourse = async() => {
+    console.log(course._id);
     await client.updateCourse(course);
     setCourses(
       courses.map((c) => {

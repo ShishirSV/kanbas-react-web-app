@@ -64,3 +64,8 @@ export const addQuestionToQuiz = async (quizId: string, question: any) => {
     const response = await axios.post(`${QUIZZES_API}/${quizId}/questions`, question);
     return response.data;
 }
+
+export const fetchQuizQuestions = async (quizId: string) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}/questions`);
+  return response.data;
+};

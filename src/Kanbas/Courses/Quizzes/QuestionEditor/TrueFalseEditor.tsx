@@ -16,6 +16,18 @@ function TrueFalseEditor({ onSave, onCancel }: TrueFalseEditorProps) {
     isTrue: true
   });
 
+  // Create a function to handle saving the question
+  const handleSave = () => {
+    const sanitizedQuestion = {
+      type: question.type,
+      title: question.title,
+      points: question.points,
+      questionText: question.questionText,
+      isTrue: question.isTrue
+    };
+    onSave(sanitizedQuestion);
+  };
+
   return (
     <div style={{
         display: "flex",
@@ -68,7 +80,7 @@ function TrueFalseEditor({ onSave, onCancel }: TrueFalseEditorProps) {
         </div>
       </div>
       <div className="mt-3">
-        <button className="btn btn-success" onClick={onSave}>Save</button>
+        <button className="btn btn-success" onClick={handleSave}>Save</button>
         <button className="btn btn-danger ms-2" onClick={onCancel}>Cancel</button>
       </div>
     </div>
