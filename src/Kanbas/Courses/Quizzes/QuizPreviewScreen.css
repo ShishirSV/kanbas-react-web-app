@@ -1,0 +1,55 @@
+/* Style the container for each question */
+.quiz-preview-question {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Light gray background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px;
+  }
+  
+  /* Style the question text */
+  .quiz-preview-question h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333; /* Darker text color */
+  }
+  
+  /* Style the "Next" button */
+  .quiz-preview-next-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #007bff; /* Bootstrap primary button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .quiz-preview-next-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  /* Ensuring the entire screen is utilized */
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .quiz-preview-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  

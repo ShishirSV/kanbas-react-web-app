@@ -4,6 +4,7 @@ import MultipleChoiceQuestion from './QuizPreview/MultipleChoiceQuestion';
 import TrueFalseQuestion from './QuizPreview/TrueFalseQuestion';
 import FillInBlanksQuestion from './QuizPreview/FillInBlanksQuestion';
 import * as client from './client';
+import './QuizPreviewScreen.css';  // Import the CSS file
 
 export interface Question {
   id: string;
@@ -22,6 +23,7 @@ function QuizPreviewScreen() {
   const { quizId } = useParams<{ quizId?: string }>();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<AnswerMap>({});
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track current question index
 
   useEffect(() => {
     if (quizId) {
@@ -48,36 +50,51 @@ function QuizPreviewScreen() {
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
   };
 
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
   if (!questions.length) return <p>Loading...</p>;
 
+  const currentQuestion = questions[currentQuestionIndex];
+
+  let QuestionComponent = null;
+  switch (currentQuestion.type) {
+    case 'multiple-choice':
+      QuestionComponent = MultipleChoiceQuestion;
+      break;
+    case 'true-false':
+      QuestionComponent = TrueFalseQuestion;
+      break;
+    case 'fill-in-blanks':
+      QuestionComponent = FillInBlanksQuestion;
+      break;
+    default:
+      return null;
+  }
+
   return (
-    <div>
-      {questions.map(question => {
-        let QuestionComponent = null;
-
-        switch (question.type) {
-          case 'multiple-choice':
-            QuestionComponent = MultipleChoiceQuestion;
-            break;
-          case 'true-false':
-            QuestionComponent = TrueFalseQuestion;
-            break;
-          case 'fill-in-blanks':
-            QuestionComponent = FillInBlanksQuestion;
-            break;
-          default:
-            return null;
-        }
-
-        return QuestionComponent && (
+    <div className="quiz-preview-container">
+      {QuestionComponent && (
+        <div className="quiz-preview-question">
           <QuestionComponent
-            key={question.id}
-            question={question}
-            answer={answers[question.id]}
-            onChange={(answer: any) => handleAnswerChange(question.id, answer)}
+            key={currentQuestion.id}
+            question={currentQuestion}
+            answer={answers[currentQuestion.id]}
+            onChange={(answer: any) => handleAnswerChange(currentQuestion.id, answer)}
           />
-        );
-      })}
+        </div>
+      )}
+      {currentQuestionIndex < questions.length - 1 && (
+        <button
+          onClick={handleNextQuestion}
+          className="quiz-preview-next-button"
+        >
+          Next
+        </button>
+      )}
     </div>
   );
 }

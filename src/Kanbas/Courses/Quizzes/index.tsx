@@ -16,7 +16,6 @@ import { useUser } from "../../UserContext";
 
 export default function Quizzes() {
   const { user } = useUser();
-  console.log(user);
   const { cid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -107,7 +106,7 @@ export default function Quizzes() {
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-2 bg-secondary">
             <MdArrowDropDown className="me-1 fs-3" />
-            Assignment Quizzes
+            Quizzes
           </div>
           <ul className="wd-lessons list-group rounded-0 wd-padded-left wd-bg-color-green">
             {quizzes.map((quiz: any) => (
@@ -117,12 +116,18 @@ export default function Quizzes() {
                 </div>
                 <div className="quiz-details flex-grow-1">
                   <strong>
-                    <Link to={user?.role === 'FACULTY' 
-                      ? `/Kanbas/Courses/${cid}/Quizzes/Details/${quiz._id}` 
-                      : `/Kanbas/Courses/${cid}/Quizzes/preview/${quiz._id}`} 
-                      className="wd-_id">
-                      {quiz.title}
-                    </Link>
+                    {user?.role === 'FACULTY' || quiz.published ? (
+                      <Link 
+                        to={user?.role === 'FACULTY' 
+                          ? `/Kanbas/Courses/${cid}/Quizzes/Details/${quiz._id}` 
+                          : `/Kanbas/Courses/${cid}/Quizzes/preview/${quiz._id}`} 
+                        className="wd-_id"
+                      >
+                        {quiz.title}
+                      </Link>
+                    ) : (
+                      <span>{quiz.title}</span> // Students see plain text if the quiz is unpublished
+                    )}
                   </strong>
                   <h6>
                     <p className="wd-fg-color-red">
